@@ -1181,10 +1181,12 @@
     }
 
     // Theme Toggle
+    // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    // Default to dark theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     if (savedTheme === 'dark') {
         body.classList.add('dark-theme');
     }
