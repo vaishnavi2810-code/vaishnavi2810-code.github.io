@@ -350,10 +350,72 @@
         }
 
         /* 3D Flip Project Cards */
+        /* 3D Flip Project Cards */
+        .projects-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            display: flex;
             gap: 2rem;
+            transition: transform 0.5s ease;
+            padding: 0 1rem;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        .carousel-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-btn:hover {
+            background: #1e88e5;
+            transform: scale(1.1);
+        }
+
+        .carousel-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background: var(--primary);
+            transform: scale(1.3);
         }
 
         .flip-hint {
@@ -368,6 +430,8 @@
         .project-card-container {
             perspective: 1000px;
             height: 450px;
+            min-width: 350px;
+            flex-shrink: 0;
         }
 
         .project-card {
@@ -886,10 +950,13 @@
 
             /* Projects */
             .projects-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
             }
 
             .project-card-container {
+                width: 100%;
+                min-width: unset;
                 height: auto;
                 min-height: 400px;
             }
@@ -1032,100 +1099,229 @@
 </section>
 
 <!-- Projects with Flip Cards -->
+<!-- Projects with Flip Cards & Carousel -->
 <section id="projects">
     <h2>Featured Projects</h2>
     <p class="flip-hint"></p>
-    <div class="projects-grid">
-        <div class="project-card-container">
-            <div class="project-card">
-                <div class="card-face card-front">
-                    <div class="project-image"><i class="fas fa-desktop"></i></div>
-                    <div class="project-content">
-                        <h3>Astron: Business System</h3>
-                        <p>Production application for manufacturing operations</p>
-                        <div class="project-tags">
-                            <span class="tag">Java</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">AWS</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/vaishnavi2810-code/Astron_BusinessManagementSystem" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+    <div class="projects-container">
+        <div class="projects-grid" id="projectsGrid">
+
+            <!-- Polyglot Mirror -->
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="card-face card-front">
+                        <div class="project-image"><i class="fas fa-language"></i></div>
+                        <div class="project-content">
+                            <h3>Polyglot Mirror</h3>
+                            <p>Real-time multilingual video translation with face-tracking</p>
+                            <div class="project-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">Next.js</span>
+                                <span class="tag">Three.js</span>
+                                <span class="tag">MediaPipe</span>
+                                <span class="tag">Google Cloud</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/vaishnavi2810-code/polyglot-mirror" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://polyglot-mirror.vercel.app/" target="_blank"><i class="fas fa-rocket"></i> Live app</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-face card-back">
-                    <h3>Astron Details</h3>
-                    <p>Desktop application managing sales, inventory, and dealer operations for textile manufacturing business.</p>
-                    <div class="metrics">
-                        <p><strong>25,000+ records</strong> managed</p>
-                        <p><strong>4+ years</strong> in production</p>
-                        <p>Automated PDF invoice generation</p>
-                        <p>MySQL on AWS RDS with daily backups</p>
+                    <div class="card-face card-back">
+                        <h3>Video Translation</h3>
+                        <p>Translates live English speech into 13 languages with 3D speech bubbles aligned to facial landmarks.</p>
+                        <div class="metrics">
+                            <p><strong>MediaPipe Vision</strong> face detection</p>
+                            <p><strong>Web Speech API</strong> for live audio</p>
+                            <p><strong>Three.js</strong> 3D bubble rendering</p>
+                            <p>Deployed on <strong>Vercel</strong></p>
+                        </div>
+                        <div style="display: flex; gap: 0.8rem; justify-content: center; margin-top: 0.5rem;">
+                            <a href="https://github.com/vaishnavi2810-code/polyglot-mirror" target="_blank"
+                               style="flex: 1; max-width: 130px; display: inline-flex; align-items: center; justify-content: center;
+                          gap: 0.4rem; background: rgba(255,255,255,0.2); color: white; padding: 0.55rem 1rem;
+                          border-radius: 25px; text-decoration: none; font-size: 0.88rem; font-weight: 600;
+                          transition: all 0.3s; backdrop-filter: blur(10px);">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="https://polyglot-mirror.vercel.app/" target="_blank"
+                               style="flex: 1; max-width: 130px; display: inline-flex; align-items: center; justify-content: center;
+                          gap: 0.4rem; background: white; color: #667eea; padding: 0.55rem 1rem;
+                          border-radius: 25px; text-decoration: none; font-size: 0.88rem; font-weight: 600;
+                          transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                                <i class="fas fa-rocket"></i> Live app
+                            </a>
+                        </div>
                     </div>
-                    <a href="https://github.com/vaishnavi2810-code/Astron_BusinessManagementSystem" target="_blank" class="back-link">View on GitHub →</a>
                 </div>
             </div>
+
+            <!-- WhatsApp Intelligence Hub -->
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="card-face card-front">
+                        <div class="project-image"><i class="fas fa-comments"></i></div>
+                        <div class="project-content">
+                            <h3>WhatsApp Intelligence Hub</h3>
+                            <p>Local-first AI chat summarization with MCP server</p>
+                            <div class="project-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">MCP</span>
+                                <span class="tag">SQLite</span>
+                                <span class="tag">Docker</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/vaishnavi2810-code/whatsapp-dcd" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://daily-digest-105.lovable.app/login" target="_blank"><i class="fas fa-rocket"></i> Prototype</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-face card-back">
+                        <h3>AI Chat Analysis</h3>
+                        <p>Engineered a local-first AI tool using MCP server and LLM APIs to summarize group chats from scanned user sessions.</p>
+                        <div class="metrics">
+                            <p><strong>SQLite3</strong> data persistence layer</p>
+                            <p><strong>Docker + Railway</strong> deployment</p>
+                            <p>React UI for summary visualization</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="https://github.com/vaishnavi2810-code/whatsapp-dcd" target="_blank"
+                               style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.25);
+              color: white; padding: 0.6rem 1.2rem; border-radius: 25px; text-decoration: none;
+              font-size: 0.9rem; font-weight: 600; transition: all 0.3s;">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="https://daily-digest-105.lovable.app/login" target="_blank"
+                               style="display: inline-flex; align-items: center; gap: 0.4rem; background: white;
+              color: var(--primary); padding: 0.6rem 1.2rem; border-radius: 25px; text-decoration: none;
+              font-size: 0.9rem; font-weight: 600; transition: all 0.3s;">
+                                <i class="fas fa-rocket"></i> Prototype
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="card-face card-front">
+                        <div class="project-image"><i class="fas fa-desktop"></i></div>
+                        <div class="project-content">
+                            <h3>Astron: Business System</h3>
+                            <p>Production application for manufacturing operations</p>
+                            <div class="project-tags">
+                                <span class="tag">Java</span>
+                                <span class="tag">MySQL</span>
+                                <span class="tag">AWS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/vaishnavi2810-code/Astron_BusinessManagementSystem" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-face card-back">
+                        <h3>Astron Details</h3>
+                        <p>Desktop application managing sales, inventory, and dealer operations for textile manufacturing business.</p>
+                        <div class="metrics">
+                            <p><strong>25,000+ records</strong> managed</p>
+                            <p><strong>4+ years</strong> in production</p>
+                            <p>Automated PDF invoice generation</p>
+                            <p>MySQL hosted on AWS RDS</p>
+                        </div>
+                        <a href="https://github.com/vaishnavi2810-code/Astron_BusinessManagementSystem" target="_blank"
+                           style="display: inline-flex; align-items: center; gap: 0.4rem; background: white;
+              color: var(--primary); padding: 0.6rem 1.2rem; border-radius: 25px; text-decoration: none;
+              font-size: 0.9rem; font-weight: 600; transition: all 0.3s;">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+<!--                        <a href="https://github.com/vaishnavi2810-code/Astron_BusinessManagementSystem" target="_blank" class="back-link">View on GitHub →</a>-->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="card-face card-front">
+                        <div class="project-image"><i class="fas fa-brain"></i></div>
+                        <div class="project-content">
+                            <h3>Meeting Analytics</h3>
+                            <p>NLP pipeline for meeting summarization</p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">PyTorch</span>
+                                <span class="tag">BART</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/vaishnavi2810-code/Workplace-Jarvis-Meeting-Task-Assistant" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-face card-back">
+                        <h3>NLP Pipeline</h3>
+                        <p>Fine-tuned BART transformers for automated meeting analysis and action item extraction.</p>
+                        <div class="metrics">
+                            <p><strong>91% improvement</strong> over baseline</p>
+                            <p>ROUGE-1: <strong>0.41</strong> (vs 0.21 baseline)</p>
+                            <p><strong>72% accuracy</strong> in classification</p>
+                            <p>Processed 247 meeting transcripts</p>
+                        </div>
+                        <a href="https://github.com/vaishnavi2810-code/Workplace-Jarvis-Meeting-Task-Assistant" target="_blank"
+                           style="display: inline-flex; align-items: center; gap: 0.4rem; background: white;
+              color: var(--primary); padding: 0.6rem 1.2rem; border-radius: 25px; text-decoration: none;
+              font-size: 0.9rem; font-weight: 600; transition: all 0.3s;">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+<!--                        <a href="https://github.com/vaishnavi2810-code/Workplace-Jarvis-Meeting-Task-Assistant" target="_blank" class="back-link">View on GitHub →</a>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="card-face card-front">
+                        <div class="project-image"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="project-content">
+                            <h3>Calendar Application</h3>
+                            <p>MVC architecture with design patterns</p>
+                            <div class="project-tags">
+                                <span class="tag">Java</span>
+                                <span class="tag">Swing</span>
+                                <span class="tag">MVC</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/vaishnavi2810-code/calendar-application" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-face card-back">
+                        <h3>Architecture Showcase</h3>
+                        <p>Multi-calendar system with timezone support and recurring events, showcasing clean software design.</p>
+                        <div class="metrics">
+                            <p><strong>MVC Architecture</strong></p>
+                            <p><strong>SOLID principles</strong> and object-oriented design patterns</p>
+                            <p>Dual interfaces: Command line + GUI</p>
+                        </div>
+                        <a href="https://github.com/vaishnavi2810-code/calendar-application" target="_blank"
+                           style="display: inline-flex; align-items: center; gap: 0.4rem; background: white;
+              color: var(--primary); padding: 0.6rem 1.2rem; border-radius: 25px; text-decoration: none;
+              font-size: 0.9rem; font-weight: 600; transition: all 0.3s;">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+<!--                        <a href="https://github.com/vaishnavi2810-code/calendar-application" target="_blank" class="back-link">View on GitHub →</a>-->
+                    </div>
+                </div>
+            </div>
+            <!-- Keep your existing 3 projects: Astron, Meeting Analytics, Calendar -->
+            <!-- (Copy them from your current HTML) -->
+
         </div>
 
-        <div class="project-card-container">
-            <div class="project-card">
-                <div class="card-face card-front">
-                    <div class="project-image"><i class="fas fa-brain"></i></div>
-                    <div class="project-content">
-                        <h3>Meeting Analytics</h3>
-                        <p>NLP pipeline for meeting summarization</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">PyTorch</span>
-                            <span class="tag">BART</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/vaishnavi2810-code/Workplace-Jarvis-Meeting-Task-Assistant" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-face card-back">
-                    <h3>NLP Pipeline</h3>
-                    <p>Fine-tuned BART transformers for automated meeting analysis and action item extraction.</p>
-                    <div class="metrics">
-                        <p><strong>91% improvement</strong> over baseline</p>
-                        <p>ROUGE-1: <strong>0.41</strong> (vs 0.21 baseline)</p>
-                        <p><strong>72% accuracy</strong> in classification</p>
-                        <p>Processed 247 meeting transcripts</p>
-                    </div>
-                    <a href="https://github.com/vaishnavi2810-code/Workplace-Jarvis-Meeting-Task-Assistant" target="_blank" class="back-link">View on GitHub →</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="project-card-container">
-            <div class="project-card">
-                <div class="card-face card-front">
-                    <div class="project-image"><i class="fas fa-calendar-alt"></i></div>
-                    <div class="project-content">
-                        <h3>Calendar Application</h3>
-                        <p>MVC architecture with design patterns</p>
-                        <div class="project-tags">
-                            <span class="tag">Java</span>
-                            <span class="tag">Swing</span>
-                            <span class="tag">MVC</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/vaishnavi2810-code/calendar-application" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-face card-back">
-                    <h3>Architecture Showcase</h3>
-                    <p>Multi-calendar system with timezone support and recurring events, showcasing clean software design.</p>
-                    <div class="metrics">
-                        <p><strong>MVC Architecture</strong></p>
-                        <p><strong>SOLID principles</strong> and object-oriented design patterns</p>
-                        <p>Dual interfaces: Command line + GUI</p>
-                    </div>
-                    <a href="https://github.com/vaishnavi2810-code/calendar-application" target="_blank" class="back-link">View on GitHub →</a>
-                </div>
-            </div>
+        <!-- Add carousel controls after the grid -->
+        <div class="carousel-controls">
+            <button class="carousel-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel-indicators" id="indicators"></div>
+            <button class="carousel-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 </section>
@@ -1138,6 +1334,7 @@
             <h3><i class="fas fa-code"></i> Languages</h3>
             <div class="skill-list">
                 <span class="skill-badge">Python</span>
+                <span class="skill-badge">JavaScript</span>
                 <span class="skill-badge">Java</span>
                 <span class="skill-badge">SQL</span>
                 <span class="skill-badge">Bash</span>
@@ -1145,44 +1342,32 @@
         </div>
 
         <div class="skill-category">
-            <h3><i class="fas fa-robot"></i> ML/DL Frameworks</h3>
+            <h3><i class="fas fa-laptop-code"></i> Frontend Frameworks</h3>
             <div class="skill-list">
+                <span class="skill-badge">React</span>
+                <span class="skill-badge">Next.js</span>
+                <span class="skill-badge">Three.js (R3F)</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3><i class="fas fa-robot"></i> AI & ML</h3>
+            <div class="skill-list">
+                <span class="skill-badge">Model Context Protocol</span>
+                <span class="skill-badge">OpenAI/Anthropic APIs</span>
+                <span class="skill-badge">LLM Fine-tuning</span>
                 <span class="skill-badge">PyTorch</span>
-                <span class="skill-badge">TensorFlow</span>
-                <span class="skill-badge">Keras</span>
-                <span class="skill-badge">HuggingFace</span>
-            </div>
-        </div>
-
-        <div class="skill-category">
-            <h3><i class="fas fa-brain"></i> NLP & CV Libraries</h3>
-            <div class="skill-list">
                 <span class="skill-badge">spaCy</span>
-                <span class="skill-badge">NLTK</span>
-                <span class="skill-badge">OpenCV</span>
-                <span class="skill-badge">NumPy</span>
-                <span class="skill-badge">Pandas</span>
-                <span class="skill-badge">Scikit-learn</span>
+                <span class="skill-badge">MediaPipe Vision</span>
             </div>
         </div>
 
         <div class="skill-category">
-            <h3><i class="fas fa-cloud"></i> Cloud & Data Engineering</h3>
+            <h3><i class="fas fa-server"></i> Backend & APIs</h3>
             <div class="skill-list">
-                <span class="skill-badge">AWS (S3, EC2)</span>
-                <span class="skill-badge">Apache Airflow</span>
-                <span class="skill-badge">ETL Pipelines</span>
-                <span class="skill-badge">CI/CD</span>
-            </div>
-        </div>
-
-        <div class="skill-category">
-            <h3><i class="fas fa-tools"></i> Developer Tools</h3>
-            <div class="skill-list">
-                <span class="skill-badge">Git</span>
-                <span class="skill-badge">Jupyter Notebooks</span>
-                <span class="skill-badge">Linux/Unix</span>
-                <span class="skill-badge">Agile/Scrum</span>
+                <span class="skill-badge">Node.js</span>
+                <span class="skill-badge">REST APIs</span>
+                <span class="skill-badge">Web Speech API</span>
             </div>
         </div>
 
@@ -1192,6 +1377,28 @@
                 <span class="skill-badge">MySQL</span>
                 <span class="skill-badge">PostgreSQL</span>
                 <span class="skill-badge">MongoDB</span>
+                <span class="skill-badge">SQLite3</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
+            <div class="skill-list">
+                <span class="skill-badge">AWS (S3, EC2)</span>
+                <span class="skill-badge">Docker</span>
+                <span class="skill-badge">Apache Airflow</span>
+                <span class="skill-badge">Vercel</span>
+                <span class="skill-badge">Railway</span>
+                <span class="skill-badge">CI/CD</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3><i class="fas fa-tools"></i> Developer Tools</h3>
+            <div class="skill-list">
+                <span class="skill-badge">Git</span>
+                <span class="skill-badge">Linux/Unix</span>
+                <span class="skill-badge">Jupyter Notebooks</span>
             </div>
         </div>
     </div>
@@ -1445,6 +1652,78 @@
     }
 
     setTimeout(type, 1000);
+
+    // Project Carousel
+    const projectsGrid = document.getElementById('projectsGrid');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicatorsContainer = document.getElementById('indicators');
+    const projectCards = document.querySelectorAll('.project-card-container');
+
+    let currentIndex = 0;
+    const totalProjects = projectCards.length;
+    let cardsPerView = window.innerWidth > 1000 ? 3 : 1;
+    const getMaxIndex = () => Math.max(0, totalProjects - cardsPerView);
+
+    // Create indicators
+    function createIndicators() {
+        indicatorsContainer.innerHTML = '';
+        const numIndicators = Math.ceil(totalProjects / cardsPerView);
+        for (let i = 0; i < numIndicators; i++) {
+            const indicator = document.createElement('div');
+            indicator.classList.add('indicator');
+            if (i === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToSlide(i * cardsPerView));
+            indicatorsContainer.appendChild(indicator);
+        }
+    }
+
+    function updateCarousel() {
+        const cardWidth = projectCards[0].offsetWidth;
+        const gap = 32;
+        const offset = -(currentIndex * (cardWidth + gap));
+        projectsGrid.style.transform = `translateX(${offset}px)`;
+
+        const indicators = document.querySelectorAll('.indicator');
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', Math.floor(currentIndex / cardsPerView) === index);
+        });
+
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= getMaxIndex();
+    }
+
+    function goToSlide(index) {
+        currentIndex = Math.max(0, Math.min(index, getMaxIndex()));
+        updateCarousel();
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex < getMaxIndex()) {
+            currentIndex++;
+            updateCarousel();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        const newCardsPerView = window.innerWidth > 1000 ? 3 : 1;
+        if (newCardsPerView !== cardsPerView) {
+            cardsPerView = newCardsPerView;
+            currentIndex = 0;
+            createIndicators();
+            updateCarousel();
+        }
+    });
+
+    createIndicators();
+    updateCarousel();
 
     // Project card flip on HOVER (not click)
     document.querySelectorAll('.project-card-container').forEach(container => {
