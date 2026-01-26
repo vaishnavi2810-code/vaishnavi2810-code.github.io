@@ -95,6 +95,31 @@
             transform: translateY(-50%) scale(1.1);
         }
 
+        .project-highlight-inline {
+            margin-top: 0.6rem;
+            padding: 0.45rem 0.7rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .project-highlight-inline i {
+            font-size: 0.85rem;
+        }
+
+        .project-highlight-inline small {
+            font-weight: 600;
+            opacity: 0.85;
+        }
+
+
         /* Hero Background - CHOOSE ONE */
 
         /* CURRENT: Matrix Rain */
@@ -1106,6 +1131,40 @@
     <div class="projects-container">
         <div class="projects-grid" id="projectsGrid">
 
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="card-face card-front">
+                        <div class="project-image"><i class="fas fa-shield-alt"></i></div>
+                        <div class="project-content">
+                            <h3>Secured & Governed MCP</h3>
+                            <p>Policy enforcement layer that governs how AI agents interact with MCP servers</p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">MCP</span>
+                                <span class="tag">LangGraph</span>
+                                <span class="tag">React</span>
+                            </div>
+                            <div class="project-highlight-inline">
+                                <i class="fas fa-trophy"></i>
+                                <span>Hackathon Winner - Open Accelerator</span>
+                                <small>Red Hat × IBM</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-face card-back">
+                        <h3>Secured MCP</h3>
+                        <p>An AI agent that applies runtime access controls before tool execution</p>
+                        <div class="metrics">
+                            <p><strong>Policy-driven</strong> access control</p>
+                            <p><strong>MVC-based</strong> Python service</p>
+                            <p><strong>Enterprise-ready</strong> architecture</p>
+                            <p><strong>LangGraph agents</strong> with runtime policy checks</p>
+                            <p><strong>React</strong> dashboard</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Polyglot Mirror -->
             <div class="project-card-container">
                 <div class="project-card">
@@ -1665,6 +1724,25 @@
     let cardsPerView = window.innerWidth > 1000 ? 3 : 1;
     const getMaxIndex = () => Math.max(0, totalProjects - cardsPerView);
 
+    // Auto-rotate variables
+    let autoRotateInterval;
+    const AUTO_ROTATE_DELAY = 4000; // 4 seconds between slides
+
+    function startAutoRotate() {
+        autoRotateInterval = setInterval(() => {
+            if (currentIndex >= getMaxIndex()) {
+                currentIndex = 0;
+            } else {
+                currentIndex++;
+            }
+            updateCarousel();
+        }, AUTO_ROTATE_DELAY);
+    }
+
+    function stopAutoRotate() {
+        clearInterval(autoRotateInterval);
+    }
+
     // Create indicators
     function createIndicators() {
         indicatorsContainer.innerHTML = '';
@@ -1673,7 +1751,11 @@
             const indicator = document.createElement('div');
             indicator.classList.add('indicator');
             if (i === 0) indicator.classList.add('active');
-            indicator.addEventListener('click', () => goToSlide(i * cardsPerView));
+            indicator.addEventListener('click', () => {
+                goToSlide(i * cardsPerView);
+                stopAutoRotate();
+                startAutoRotate();
+            });
             indicatorsContainer.appendChild(indicator);
         }
     }
@@ -1702,6 +1784,8 @@
         if (currentIndex > 0) {
             currentIndex--;
             updateCarousel();
+            stopAutoRotate();
+            startAutoRotate();
         }
     });
 
@@ -1709,8 +1793,15 @@
         if (currentIndex < getMaxIndex()) {
             currentIndex++;
             updateCarousel();
+            stopAutoRotate();
+            startAutoRotate();
         }
     });
+
+    // Pause on hover
+    const projectsContainer = document.querySelector('.projects-container');
+    projectsContainer.addEventListener('mouseenter', stopAutoRotate);
+    projectsContainer.addEventListener('mouseleave', startAutoRotate);
 
     window.addEventListener('resize', () => {
         const newCardsPerView = window.innerWidth > 1000 ? 3 : 1;
@@ -1724,6 +1815,7 @@
 
     createIndicators();
     updateCarousel();
+    startAutoRotate();
 
     // Project card flip on HOVER (not click)
     document.querySelectorAll('.project-card-container').forEach(container => {
@@ -1751,6 +1843,8 @@
     document.querySelectorAll('.timeline-item, .project-card-container, .skill-category, .publication-card, .education-card').forEach(el => {
         observer.observe(el);
     });
+
+    ro
 </script>
 </body>
 </html>
