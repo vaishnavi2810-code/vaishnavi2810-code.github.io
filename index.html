@@ -1724,25 +1724,6 @@
     let cardsPerView = window.innerWidth > 1000 ? 3 : 1;
     const getMaxIndex = () => Math.max(0, totalProjects - cardsPerView);
 
-    // Auto-rotate variables
-    let autoRotateInterval;
-    const AUTO_ROTATE_DELAY = 4000; // 4 seconds between slides
-
-    function startAutoRotate() {
-        autoRotateInterval = setInterval(() => {
-            if (currentIndex >= getMaxIndex()) {
-                currentIndex = 0;
-            } else {
-                currentIndex++;
-            }
-            updateCarousel();
-        }, AUTO_ROTATE_DELAY);
-    }
-
-    function stopAutoRotate() {
-        clearInterval(autoRotateInterval);
-    }
-
     // Create indicators
     function createIndicators() {
         indicatorsContainer.innerHTML = '';
@@ -1751,11 +1732,7 @@
             const indicator = document.createElement('div');
             indicator.classList.add('indicator');
             if (i === 0) indicator.classList.add('active');
-            indicator.addEventListener('click', () => {
-                goToSlide(i * cardsPerView);
-                stopAutoRotate();
-                startAutoRotate();
-            });
+            indicator.addEventListener('click', () => goToSlide(i * cardsPerView));
             indicatorsContainer.appendChild(indicator);
         }
     }
@@ -1784,8 +1761,6 @@
         if (currentIndex > 0) {
             currentIndex--;
             updateCarousel();
-            stopAutoRotate();
-            startAutoRotate();
         }
     });
 
@@ -1793,15 +1768,8 @@
         if (currentIndex < getMaxIndex()) {
             currentIndex++;
             updateCarousel();
-            stopAutoRotate();
-            startAutoRotate();
         }
     });
-
-    // Pause on hover
-    const projectsContainer = document.querySelector('.projects-container');
-    projectsContainer.addEventListener('mouseenter', stopAutoRotate);
-    projectsContainer.addEventListener('mouseleave', startAutoRotate);
 
     window.addEventListener('resize', () => {
         const newCardsPerView = window.innerWidth > 1000 ? 3 : 1;
@@ -1815,7 +1783,6 @@
 
     createIndicators();
     updateCarousel();
-    startAutoRotate();
 
     // Project card flip on HOVER (not click)
     document.querySelectorAll('.project-card-container').forEach(container => {
