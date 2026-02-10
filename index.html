@@ -992,11 +992,26 @@
             .project-card-container {
                 width: 100%;
                 min-width: unset;
-                height: 450px;
+                height: auto;
+                perspective: none;
             }
 
             .project-card {
-                height: 100%;
+                height: auto;
+                transform-style: flat;
+            }
+
+            .card-front {
+                position: relative;
+                height: auto;
+            }
+
+            .card-back {
+                display: none;
+            }
+
+            .project-card.flipped {
+                transform: none;
             }
 
             .card-face {
